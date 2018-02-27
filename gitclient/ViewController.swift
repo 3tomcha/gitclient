@@ -19,15 +19,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     var stargazers_count = Array<String>()
-    var name: [Any] = []
-    var owner: [Any] = []
+    var name = Array<String>()
+    var owner = Array<String>()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//
+        
         DispatchQueue(label: "test").async {
             self.loadData()
         }
+        
 //
 //        DispatchQueue.main.async{
 //
@@ -42,36 +44,78 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         // Dispose of any resources that can be recreated.
     }
     
+    
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         
-        // セルを取得する
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath)
+        let indexcase = indexPath.row % 3
         
-        // セルに表示する値を設定する
-        if self.stargazers_count.count > 0 {
-            cell.textLabel?.text = self.stargazers_count[indexPath.row]
+        switch indexcase {
+        case 0:
+            
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath) as! CustomTableViewCell
+            
+            
+            
+            cell.setCell(LabelText1: self.stargazers_count[indexPath.row], LabelText2: self.name[indexPath.row], LabelText3: self.owner[indexPath.row])
+            return cell
+            
+        default:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath) as! CustomTableViewCell
+            
+            
+            
+            cell.setCell(LabelText1: self.stargazers_count[indexPath.row], LabelText2: self.name[indexPath.row], LabelText3: self.owner[indexPath.row])
+            
+            return cell
         }
         
-        print(self.stargazers_count[indexPath.row])
         
-        return cell
+        
+//        cell.setCell = self.stargazers_count[indexPath.row]
+        
+        
+        
+//        switch indexcase {
+        
+//        case 0:
+//            let label1 = UILabel(tag: 0)
+            
+            
+//        case 0:
+        
+//
+//        case 1:
+//            let cell2: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "MyCell2", for: indexPath)
+//            cell2.textLabel?.text = self.name[indexPath.row]
+//            return cell2
+//
+//        case 2:
+//            let cell3: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "MyCell3", for: indexPath)
+//            cell3.textLabel?.text = self.owner[indexPath.row]
+//            return cell3
+//
+//        default:
+//            print(indexPath.row)
+//            let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath)
+//            cell.textLabel?.text = self.stargazers_count[indexPath.row]
+//            return cell
+//        }
     }
     
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int{
         
-//        print(self.stargazers_count.count)
         return self.stargazers_count.count
+        
     }
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
-    }
+    
     
     
     func loadData(){
