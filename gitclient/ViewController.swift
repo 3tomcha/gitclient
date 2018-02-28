@@ -21,7 +21,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var stargazers_count = Array<String>()
     var name = Array<String>()
     var owner = Array<String>()
-    
+    var url = Array<String>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,38 +70,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
             return cell
         }
-        
-        
-        
-//        cell.setCell = self.stargazers_count[indexPath.row]
-        
-        
-        
-//        switch indexcase {
-        
-//        case 0:
-//            let label1 = UILabel(tag: 0)
-            
-            
-//        case 0:
-        
-//
-//        case 1:
-//            let cell2: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "MyCell2", for: indexPath)
-//            cell2.textLabel?.text = self.name[indexPath.row]
-//            return cell2
-//
-//        case 2:
-//            let cell3: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "MyCell3", for: indexPath)
-//            cell3.textLabel?.text = self.owner[indexPath.row]
-//            return cell3
-//
-//        default:
-//            print(indexPath.row)
-//            let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath)
-//            cell.textLabel?.text = self.stargazers_count[indexPath.row]
-//            return cell
-//        }
+
     }
     
     func tableView(_ tableView: UITableView,
@@ -116,12 +85,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return 1
     }
     
+    func tableView(_ table: UITableView, didSelectRowAt indexPath:IndexPath) {
+        
+        print(url[indexPath[1]])
+        let url_url = URL(string:url[indexPath[1]])
+        
+        if( UIApplication.shared.canOpenURL(url_url!) ) {
+            UIApplication.shared.open(url_url!)
+        }
+
+        
+    }
+    
     
     
     func loadData(){
         
         Alamofire.request(
-            "https://api.github.com/search/repositories?q=swift+language:assembly&sort=stars&order=desc"
+            "https://api.github.com/search/repositories?q=swift+language:swift&sort=stars&order=desc"
             , method: .get, encoding: JSONEncoding.default).validate().responseJSON { response in
                 switch response.result {
                 case .success(let value):
@@ -137,6 +118,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         let owner_value:String = json["items"][i]["owner"]["login"].stringValue
                         self.owner.append(owner_value)
                         
+                        
+                        let url_value:String = json["items"][i]["html_url"].stringValue
+                        self.url.append(url_value)
+//                        print(url_value)
                         
                         i+=1
                     }
