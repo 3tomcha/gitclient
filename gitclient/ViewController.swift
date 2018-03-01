@@ -42,6 +42,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         
         TableView.rowHeight = UITableViewAutomaticDimension
+        
+        let headerCell: UITableViewCell = TableView.dequeueReusableCell(withIdentifier: "TableHeaderCell")!
+        let headerView: UIView = headerCell.contentView
+        TableView.tableHeaderView = headerView
+        
 //
 //        DispatchQueue.main.async{
 //
