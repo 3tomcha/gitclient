@@ -26,10 +26,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         DispatchQueue(label: "test").async {
             self.loadData()
         }
         
+        // セルの高さ
+        TableView.estimatedRowHeight = 0
+        
+        // セクションヘッダー
+        TableView.estimatedSectionHeaderHeight = 0
+        
+        // セクションフッター
+        TableView.estimatedSectionFooterHeight = 0
+        
+        
+        TableView.rowHeight = UITableViewAutomaticDimension
 //
 //        DispatchQueue.main.async{
 //
@@ -110,7 +122,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     let json = JSON(value)
                     
                     var i=0
-                    while i<100{
+                    while i<30{
                         let stargazers_value:String = json["items"][i]["stargazers_count"].stringValue
                         self.stargazers_count.append(stargazers_value)
                         let name_value:String = json["items"][i]["name"].stringValue
